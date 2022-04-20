@@ -5,8 +5,8 @@ conexao = mysql.connector.connect( host='localhost', user='root', password='2251
 cursor = conexao.cursor()
 
 #=====================================================================
-def CREATE(produto, valor):
-    comando = f'INSERT INTO tb_precos(PRODUTO, VALOR) VALUES("{produto}", {valor})'
+def CREATE(codigo,produto, valor):
+    comando = f'INSERT INTO tb_precos(PRODUTO, VALOR) VALUES({codigo},"{produto}", {valor})'
     cursor.execute(comando)
     conexao.commit()
 def READ():
@@ -15,23 +15,25 @@ def READ():
     resultado = cursor.fetchall()
     print(resultado)
 def UPDATE():
-    opcao = int(input('[1]-Produto [2]-Preço  [3]-ID  [9]-Sair?'))
+    opcao = int(input('[1]-Codigo [2]-Produto  [3]-Preco  [9]-Sair?'))
     if opcao ==1:
-        antigo = input('Qual produto deseja alterar? ')
-        nome = input('Qual novo nome deseja? ')
-        comando = f'UPDATE tb_precos SET PRODUTO = "{nome}" WHERE PRODUTO = "{antigo}"'
+        antigo = input('Qual ID deseja alterar? ')
+        valor = float(input('Qual valor deseja?'))
+        comando = f'UPDATE tb_precos SET ID = {valor} WHERE ID = "{antigo}"'
         cursor.execute(comando)
         conexao.commit()
+    
     elif opcao == 2:
         antigo = input('Qual produto deseja alterar? ')
         valor = float(input('Qual valor deseja?'))
         comando = f'UPDATE tb_precos SET VALOR = {valor} WHERE PRODUTO = "{antigo}"'
         cursor.execute(comando)
         conexao.commit()
+        
     elif opcao == 3:
-        antigo = input('Qual ID deseja alterar? ')
-        valor = float(input('Qual valor deseja?'))
-        comando = f'UPDATE tb_precos SET ID = {valor} WHERE ID = "{antigo}"'
+        antigo = input('Qual preço deseja alterar? ')
+        nome = input('Qual novo nome deseja? ')
+        comando = f'UPDATE tb_precos SET VALOR = "{nome}" WHERE PRODUTO = "{antigo}"'
         cursor.execute(comando)
         conexao.commit()
 
